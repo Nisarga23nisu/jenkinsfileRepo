@@ -1,11 +1,10 @@
 pipeline{
-  agent { label 'slave-1'}
+  agent { label 'slave-1' }
   stages{
     stage("Build stages") {
         steps{
            sh '''
-               echo "cd /var/lib/jenkins/
-                ls -ll 
+              ls -ll 
                '''
               }
               } 
@@ -18,17 +17,4 @@ pipeline{
                }
       }
 }
-}
-
-
-
-
-
-
-
-
-
-
-
-
 }
