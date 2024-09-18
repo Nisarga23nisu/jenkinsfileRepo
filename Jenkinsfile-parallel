@@ -1,0 +1,40 @@
+pipeline {
+agent none
+stages{
+   stage( "Build"){
+    agent { label 'master'}
+    steps{
+      echo "this is build stage "
+      sh '''
+      cd /var/lib/jenkins
+       ls -ll
+      '''
+     }
+   }
+
+   stage( "Deploy" ){
+    parallel{
+    agent { label 'slave' }
+    steps{
+    echo "this is deploy stage "
+      sh '''
+      cd /home/ubuntu
+       ls -ll
+      '''
+    }
+    }
+
+    
+    stage( "Test" ){
+    agent { label 'master' }
+    steps{
+    echo "this is Test stage "
+      sh '''
+      cd /home/ubuntu
+       ls -ll
+      '''
+    }
+    }
+    }
+    }
+}
