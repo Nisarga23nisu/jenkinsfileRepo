@@ -1,0 +1,25 @@
+pipeline {
+agent { label 'slave' }
+
+parameters {
+  booleanParam defaultValue: true, description: 'Run unit tests?', name: 'RUN_TEST'
+  choice choices: ['development', 'test', 'production'], description: 'Select the environment', name: 'ENVIRONMENT'
+  credentials credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: 'fa113780-2fa3-47ce-8330-0fd8606a6f72', description: 'Credentials for deployment', name: 'CREDTENTILAS', required: true
+}
+
+
+stages{
+   stage( "Build"){
+     when {
+        expression { params.RUN_TEST == true }
+      }
+      steps {
+          echo "running on enivronment : ${params.ENVIRONMENT} "
+          echo "credentials used is : ${params.CREDTENTILA}"
+     }
+   }
+   
+
+
+}
+}
