@@ -1,29 +1,27 @@
-parallel {
-   
-    agent { label 'slave' } 
-     parameters {
-     booleanParam defaultValue: true, description: 'Run the Test stage?', name: 'RUN_TEST'
-}
+pipeline {
+    agent any
 
-stages{
- 
-    when {
-        expression { params.RUN_TEST }
+    parameters {
+        booleanParam(name: 'RUN_TEST', defaultValue: true, description: 'Run the Test stage?')
     }
-     stage('BUILD') {
-     steps{
-        echo "EXECUTING BUILDS "
-     }
-  }
 
-stage ('TEST'){
-    steps{
-        echo "EXECUTING TEST "
-    }
-}
+    stages {
+        
+                stage('BUILD') {
+                    steps {
+                        echo "EXECUTING BUILDS"
+                    }
+                }
 
-}
+                stage('TEST') {
+                    when {
+                        expression { params.RUN_TEST }
+                    }
+                    steps {
+                        echo "EXECUTING TEST"
+                    }
+                }
+            }
+        }
+    
 
-
-
-}
