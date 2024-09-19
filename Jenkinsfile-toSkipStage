@@ -1,61 +1,29 @@
-pipeline {
-    agent none
+parallel {
+   
+    agent { label 'slave' } 
+     parameters {
+     booleanParam defaultValue: true, description: 'Run the Test stage?', name: 'RUN_TEST'
+}
 
-    parameters {
-        booleanParam(name: 'SKIP_DEPLOY', defaultValue: false, description: 'Skip the deploy stage')
+stages{
+ 
+    when {
+        expression { params.RUN_TEST }
     }
+     stage('BUILD') {
+     steps{
+        echo "EXECUTING BUILDS "
+     }
+  }
 
-    stages {
-        stage("Build") {
-            agent { label 'master' }
-            steps {
-                echo "This is the build stage"
-                sh '''
-                    cd /var/lib/jenkins
-                    ls -ll
-                '''
-            }
-        }
-
-        stage("Deploy") {
-            agent { label 'slave' }
-            when {
-                expression { return !params.SKIP_DEPLOY }  // Skip deploy if parameter is true
-            }
-            steps {
-                sh '''
-                    echo "This is the deploy stage"
-                    cd /home/ubuntu
-                    ls -ll
-                '''
-            }
-        }
-
-        stage("Test") {
-            parallel {
-                stage("test1") {
-                    agent { label 'master' }
-                    steps {
-                        echo "This is test1 stage"
-                        sh '''
-                            mkdir dir1
-                            chmod 777 dir1
-                            ls -ll
-                        '''
-                    }
-                }
-
-                stage("test2") {
-                    agent { label 'slave' }
-                    steps {
-                        echo "This is test2 stage"
-                        sh '''
-                            cd /home/ubuntu
-                            ls -ll
-                        '''
-                    }
-                }
-            }
-        }
+stage ('TEST'){
+    steps{
+        echo "EXECUTING TEST "
     }
+}
+
+}
+
+
+
 }
