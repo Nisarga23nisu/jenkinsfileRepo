@@ -6,11 +6,12 @@ pipeline {
 }
 stages {
     stage ('build') {
+       steps {
         echo "building stage"
         echo "scm stage"
         git branch: "${BRANCH}", url: "${GIT_URL}"
     }
-
+}
 
     }
 }
