@@ -4,11 +4,11 @@ pipeline {
       GIT_URL = "https://github.com/vachanahm/jenkinsfileRepo.git"
       BRANCH = "main"
 }
-stages{
-    stage('build'){
+stages {
+    stage ('build') {
         echo "building stage"
         echo "scm stage"
-        git branch: ${BRANCH}, url: ${GIT_URL}
+        git branch: "${BRANCH}", url: "${GIT_URL}"
     }
 
 
