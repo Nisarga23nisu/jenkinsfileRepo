@@ -1,1 +1,16 @@
+pipeline {
+    agent { label 'slave'}
+    environment {
+      GIT_URL = "https://github.com/vachanahm/jenkinsfileRepo.git"
+      BRANCH = "main"
+}
+stages{
+    stage('build'){
+        echo "building stage"
+        echo "scm stage"
+        git branch: ${BRANCH}, url: ${GIT_URL}
+    }
 
+
+    }
+}
