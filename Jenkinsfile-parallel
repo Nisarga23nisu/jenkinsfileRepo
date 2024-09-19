@@ -33,8 +33,7 @@ stages{
                   steps{
                       echo "this is Test stage "
                       sh '''
-                      mkdir dir1 
-                      chmod 777 dir1
+                      
                       ls -ll
                       '''
                  }
