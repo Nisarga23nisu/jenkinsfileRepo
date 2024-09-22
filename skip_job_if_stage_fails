@@ -1,0 +1,32 @@
+parallel {
+    agent { label 'slave-1' }
+    stages {
+      stage ('building') {
+         steps {
+            sh '''
+            echo "building stage"
+            ls -ll
+            '''
+         }
+
+      }
+       stage ('testing') {
+        when {
+            expression {  return currentBuild.currentResult == 'SUCCESS' } 
+        }
+         steps {
+            sh '''
+            echo "testing  stage"
+            ls -ll
+            '''
+         }
+
+       }
+
+
+
+    }
+
+
+
+}
