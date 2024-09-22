@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+            }
+        }
+    }
+
+post {
+  always {
+         mail to: 'vachanaahm@gmial.com',
+             subject: "Build failed: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+             body: "Check the Jenkins job: ${env.BUILD_URL}"
+    }
+}
