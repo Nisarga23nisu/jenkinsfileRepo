@@ -1,0 +1,31 @@
+pipeline {
+    agent none  
+    stages {
+        stage('Build') {
+            parallel {
+                stage('Build1') {
+                    agent { label 'slave-1' }
+                    steps {
+                        sh '''
+                            ls -ll
+                            echo "This is stage of building1"
+                        '''
+                    }
+                }
+                stage('Build12') {
+                    when{
+                        expression { return !params.Skip_build2 }
+                    }
+                    agent { label 'master' }
+                    steps {
+                        sh '''
+                            ls -ll
+                            ls -a
+                            echo "This is stage of building2"
+                        '''
+                    }
+                }
+            }
+        }
+    }
+}
