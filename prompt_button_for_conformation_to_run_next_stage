@@ -1,0 +1,33 @@
+pipeline {
+    agent none  
+    stages {
+        stage('Build1') {
+            agent { label 'slave-1' }
+            steps {
+                sh '''
+                    ls -ll
+                    echo "This is stage of building1"
+                '''
+            }
+        }
+        stage('User Approval') {
+            agent none  // No agent needed for the input stage
+            steps {
+                script {
+                    // Prompt the user for approval to proceed
+                    input message: 'Do you want to proceed with Build12?', ok: 'Proceed'
+                }
+            }
+        }
+        stage('Build12') {
+            agent { label 'master' }
+            steps {
+                sh '''
+                    ls -ll
+                    ls -a
+                    echo "This is stage of building2"
+                '''
+            }
+        }
+    }
+}
