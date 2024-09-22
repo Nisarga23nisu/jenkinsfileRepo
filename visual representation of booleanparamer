@@ -1,0 +1,15 @@
+pipeline
+│
+├── parameters
+│   └── SKIP_BUILD12 (boolean)
+│
+└── stages
+    └── Build
+        └── parallel
+            ├── Build1
+            │   └── agent: slave-1
+            │   └── steps: ls, echo
+            └── Build12
+                ├── when: !SKIP_BUILD12
+                └── agent: master
+                └── steps: ls, echo
