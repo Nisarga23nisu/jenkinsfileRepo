@@ -1,0 +1,29 @@
+Tomcat deployment
+
+
+1 create one server for tomcat deployment 
+2 install tomcat 
+  > login to root directory sudo su -
+  > install tomact using  https://tomcat.apache.org/download-90.cgi
+  > use >> wget tar.gz (pgp, sha512)
+  > to untar file use > tar -xvzf <tar file>
+  > change the name to tomcat > mv tomcat_tar_file tomcat
+  >install java > yum install java
+  >inside tomcat>webapps>manager>META.INF/context.xml 
+          tomcat>webapps>host-manger/META-INF/context.xml
+    here inside this 2 file (context.xml) search for value classNme line commentout that line,because it only allows your local ports 
+3 in tools under mange jenkins configure maven 
+4 maven should be installed in the node/master where pipiline runs
+5 freestyle project 
+6  select invoke top level maven target 
+   > clean install
+7 to deploy we have plugin 
+  >deploy to container plugin
+  >choose plugin under post build option 
+  >under containers select tomcat 
+  >add credentails of tomcat
+    username
+	password 
+	
+  
+  
